@@ -1,9 +1,14 @@
 package com.github.hrhdaniel.buildlights.bamboo.actions;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.client.RestTemplate;
 
 import com.atlassian.bamboo.chains.Chain;
 import com.atlassian.bamboo.chains.ChainExecution;
@@ -13,9 +18,9 @@ import com.atlassian.bamboo.variable.VariableDefinition;
 import com.atlassian.bamboo.variable.VariableDefinitionManager;
 
 public class BuildLightsPostChain implements PostChainAction {
-	
+
 	private VariableDefinitionManager variables;
-	
+
 	public BuildLightsPostChain(VariableDefinitionManager variables) {
 		this.variables = variables;
 	}
@@ -24,27 +29,29 @@ public class BuildLightsPostChain implements PostChainAction {
 
 	public void execute(Chain chain, ChainResultsSummary chainResultsSummary, ChainExecution chainExecution)
 			throws InterruptedException, Exception {
-		
-		if ( chain.getMaster() != null ) {
+
+		if (chain.getMaster() != null) {
 			// Do not send light updates for branch builds
 			return;
 		}
-		
+
 		VariableDefinition clientIdVar = variables.getGlobalVariableByKey("lights.clientId");
 		VariableDefinition lightsURLVar = variables.getGlobalVariableByKey("lights.url");
-		
-		if ( clientIdVar == null ) {
-			logger.warn("lights.clientId global variable not set.  No build information will be sent to lights status server");
+
+		if (clientIdVar == null) {
+			logger.warn(
+					"lights.clientId global variable not set.  No build information will be sent to lights status server");
 			return;
 		}
-		
-		if ( lightsURLVar == null ) {
-			logger.warn("lights.url global variable not set.  No build information will be sent to lights status server");
+
+		if (lightsURLVar == null) {
+			logger.warn(
+					"lights.url global variable not set.  No build information will be sent to lights status server");
 			return;
 		}
-		
+
 		boolean success;
-		
+
 		switch (chainResultsSummary.getBuildState()) {
 		case SUCCESS:
 			success = true;
@@ -53,25 +60,30 @@ public class BuildLightsPostChain implements PostChainAction {
 			success = false;
 			break;
 		default:
-			// Unknown state.  Do not send light updates.
+			// Unknown state. Do not send light updates.
 			return;
 		}
-		
+
 		String projectKey = chainResultsSummary.getImmutablePlan().getProject().getKey();
 		String planKey = chainResultsSummary.getImmutablePlan().getBuildKey();
 		int buildNo = chainResultsSummary.getBuildNumber();
 		String clientId = clientIdVar.getValue();
 		String lightsUrl = lightsURLVar.getValue();
-		
-		logger.info("--------------------- here");
-		logger.info("clientId :" + clientId);
-		logger.info("projectKey :" + projectKey);
-		logger.info("planKey :" + planKey);
-		logger.info("buildNo :" + buildNo);
-		logger.info("success :" + success);
-		logger.info("--------------------- here");
-		
-		// TODO send status to Lights URL
+		String buildId = projectKey + "-" + planKey;
+
+		RestTemplate rest = new RestTemplate();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("X_CLIENT_ID", clientId);
+
+		String url = lightsUrl + "/buildstatus/" + buildId;
+
+		Map<String, Object> status = new HashMap<>();
+		status.put("BuildStatus", success);
+		status.put("BuildNumber", buildNo);
+		HttpEntity<Map<String, Object>> request = new HttpEntity<>(status, headers);
+
+		rest.exchange(url, HttpMethod.PUT, request, String.class);
 	}
 
 }
