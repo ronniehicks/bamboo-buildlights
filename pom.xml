@@ -27,12 +27,12 @@
 	<properties>
 		<bamboo.version>5.15.4</bamboo.version>
 		<bamboo.data.version>5.15.4</bamboo.data.version>
-		<amps.version>6.2.11</amps.version>
+		<amps.version>8.0.0</amps.version>
 		<plugin.testrunner.version>1.2.3</plugin.testrunner.version>
 		<atlassian.spring.scanner.version>1.2.13</atlassian.spring.scanner.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<!-- This key is used to keep the consistency between the key in atlassian-plugin.xml 
+		<!-- This key is used to keep the consistency between the key in atlassian-plugin.xml
 			and the key to generate bundle. -->
 		<atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
 	</properties>
@@ -97,7 +97,7 @@
 		<plugins>
 			<plugin>
 				<groupId>com.atlassian.maven.plugins</groupId>
-				<artifactId>maven-bamboo-plugin</artifactId>
+				<artifactId>bamboo-maven-plugin</artifactId>
 				<version>${amps.version}</version>
 				<extensions>true</extensions>
 				<configuration>
@@ -134,7 +134,7 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
+				<!--This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>

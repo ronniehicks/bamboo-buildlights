@@ -10,9 +10,13 @@
     <postChainAction key="myPostChainAction" class="com.github.hrhdaniel.buildlights.bamboo.actions.BuildLightsPostChain">
         <description>Sends plan status to build light tracker</description>
     </postChainAction>
-    
+
     <component-import key="variableDefinitionManager" name="VariableDefinitionManager"
 		interface="com.atlassian.bamboo.variable.VariableDefinitionManager">
 		<description>VariableDefinitionManager</description>
 	</component-import>
+
+        <!-- Listeners -->
+    <bambooEventListener name="Build Lights Update" key="build-lights-deployment-updater" class="com.github.hrhdaniel.buildlights.bamboo.listeners.BuildLightsDeploymentEvent"/>
+
 </atlassian-plugin>
