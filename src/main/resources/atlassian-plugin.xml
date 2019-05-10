@@ -17,6 +17,5 @@
 	</component-import>
 
         <!-- Listeners -->
-    <bambooEventListener name="Build Lights Update" key="build-lights-deployment-updater" class="com.github.hrhdaniel.buildlights.bamboo.listeners.BuildLightsDeploymentEvent"/>
-
+    <bambooEventListener name="Deployment Completed Build Lights" key="deploymentCompletedEvent" class="com.github.hrhdaniel.buildlights.bamboo.listeners.BuildLightsDeploymentEventListener"/>
 </atlassian-plugin>

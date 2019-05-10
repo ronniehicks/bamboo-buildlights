@@ -7,6 +7,11 @@
             "label": "atlas-debug",
             "type": "shell",
             "command": "atlas-debug"
+        },
+        {
+            "label": "atlas-clean",
+            "type": "shell",
+            "command": "atlas-clean"
         }
     ]
 }

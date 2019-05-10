@@ -25,8 +25,8 @@
 	<packaging>atlassian-plugin</packaging>
 
 	<properties>
-		<bamboo.version>5.15.4</bamboo.version>
-		<bamboo.data.version>5.15.4</bamboo.data.version>
+		<bamboo.version>6.4.1</bamboo.version>
+		<bamboo.data.version>6.4.1</bamboo.data.version>
 		<amps.version>8.0.0</amps.version>
 		<plugin.testrunner.version>1.2.3</plugin.testrunner.version>
 		<atlassian.spring.scanner.version>1.2.13</atlassian.spring.scanner.version>

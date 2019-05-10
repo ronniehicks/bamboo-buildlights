@@ -9,8 +9,7 @@
             "name": "Debug (Attach)",
             "request": "attach",
             "hostName": "localhost",
-            "port": 5005,
-            "preLaunchTask": "atlas-debug"
+            "port": 5005
         }
     ]
 }
