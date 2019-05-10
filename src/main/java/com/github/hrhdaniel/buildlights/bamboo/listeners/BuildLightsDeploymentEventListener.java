@@ -1,7 +1,8 @@
 package com.github.hrhdaniel.buildlights.bamboo.listeners;
 
-import java.util.logging.Logger;
 
+
+import org.apache.log4j.spi.LoggerFactory;
 // import com.atlassian.bamboo.deployments.execution.events.DeploymentFinishedEvent;
 // import com.atlassian.bamboo.deployments.projects.DeploymentProject;
 // import com.atlassian.bamboo.deployments.projects.service.DeploymentProjectService;
